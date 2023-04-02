@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Entities
+﻿namespace Domain.Entities
 {
     /// <summary>
     /// Base entity for all dishes

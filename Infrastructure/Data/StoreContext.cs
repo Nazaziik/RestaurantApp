@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebAPI.Entities;
+using Domain.Entities;
 
-namespace WebAPI.Data
+namespace Infrastructure.Data
 {
     /// <summary>
     /// Entity Framework injection class
@@ -14,4 +14,4 @@ namespace WebAPI.Data
 
         public DbSet<Dish> Dishes { get; set; }
     }
-}
+} 
