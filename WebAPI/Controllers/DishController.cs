@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Infrastructure.Data;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using WebAPI.Data;
-using WebAPI.Entities;
 
 namespace WebAPI.Controllers
 {
