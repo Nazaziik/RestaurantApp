@@ -1,16 +1,24 @@
-﻿namespace Domain.Entities
+﻿using Domain.Entities.Enums;
+
+namespace Domain.Entities
 {
     /// <summary>
     /// Base entity for all dishes
     /// </summary>
-    public class Dish
+    public class Dish : BaseEntity
     {
-        public int Id { get; set; }
+        private readonly List<Product> _products = new();
 
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        //public List<Product> Products;
+        public decimal Price { get; set; }
+
+        public string PictureUrl { get; set; }
+
+        public DishType DishType { get; set; }
+
+        public IList<Product> Products { get { return _products; } }
     }
 }

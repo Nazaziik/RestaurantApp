@@ -10,8 +10,11 @@ namespace Infrastructure.Data
     {
         public StoreContext(DbContextOptions options) : base(options)
         {
+
         }
 
         public DbSet<Dish> Dishes { get; set; }
+
+        public DbSet<Product> Products { get; set; }
     }
 } 
