@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Enums;
+﻿using Domain.Entities.ConnectorsMtM;
+using Domain.Entities.Enums;
 
 namespace Domain.Entities
 {
@@ -7,7 +8,7 @@ namespace Domain.Entities
     /// </summary>
     public class Dish : BaseEntity
     {
-        private readonly List<Product> _products = new();
+        private readonly List<DishProduct> _products = new();
 
         public string Name { get; set; }
 
@@ -19,6 +20,6 @@ namespace Domain.Entities
 
         public DishType DishType { get; set; }
 
-        public IList<Product> Products { get { return _products; } }
+        public IList<DishProduct> DishProducts { get { return _products; } }
     }
 }
