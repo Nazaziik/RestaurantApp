@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Infrastructure.Data;
 using Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+using Domain.Interfaces;
 
 namespace WebAPI.Controllers
 {
@@ -9,25 +8,25 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class DishController : ControllerBase
     {
-        private readonly StoreContext _context;
+        readonly IDishRepository _repo;
 
-        public DishController(StoreContext context)
+        public DishController(IDishRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Dish>>> GetDishes()
         {
-            var dishes = await _context.Dishes.ToListAsync();
+            var dishes = await _repo.GetDishesAsync();
 
-            return dishes;
+            return Ok(dishes);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Dish>> GetDish(int id)
         {
-            return await _context.Dishes.FindAsync(id);
+            return await _repo.GetDishByIdAsync(id);
         }
     }
 }

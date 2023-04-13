@@ -1,16 +1,19 @@
-﻿namespace Domain.Entities
-{
-    /// <summary>
-    /// Base entity for all dishes
-    /// </summary>
-    public class Dish
-    {
-        public int Id { get; set; }
+﻿using Domain.Entities.Enums;
 
+namespace Domain.Entities
+{
+    public class Dish : BaseEntity
+    {
         public string Name { get; set; }
 
         public string Description { get; set; }
 
-        //public List<Product> Products;
+        public decimal Price { get; set; }
+
+        public string PictureUrl { get; set; }
+
+        public DishType DishType { get; set; }
+
+        //public List<Product> Products { get; set; } = new List<Product>();
     }
 }
