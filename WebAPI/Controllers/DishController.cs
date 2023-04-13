@@ -8,17 +8,17 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class DishController : ControllerBase
     {
-        readonly IDishRepository _repo;
+        private readonly IGenericRepository<Dish> _dishRepo;
 
-        public DishController(IDishRepository repo)
+        public DishController(IGenericRepository<Dish> dishRepo)
         {
-            _repo = repo;
+            _dishRepo = dishRepo;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Dish>>> GetDishes()
         {
-            var dishes = await _repo.GetDishesAsync();
+            var dishes = await _dishRepo.GetAllAsync();
 
             return Ok(dishes);
         }
@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Dish>> GetDish(int id)
         {
-            return await _repo.GetDishByIdAsync(id);
+            return await _dishRepo.GetByIdAsync(id);
         }
     }
 }
