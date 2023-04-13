@@ -10,28 +10,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20230402170731_InitialCreate")]
+    [Migration("20230413184257_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.15");
-
-            modelBuilder.Entity("Domain.Entities.ConnectorsMtM.DishProduct", b =>
-                {
-                    b.Property<int>("DishId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("DishId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("DishProducts");
-                });
 
             modelBuilder.Entity("Domain.Entities.Dish", b =>
                 {
@@ -71,6 +56,8 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ProductType")
@@ -79,35 +66,6 @@ namespace Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ConnectorsMtM.DishProduct", b =>
-                {
-                    b.HasOne("Domain.Entities.Dish", "Dish")
-                        .WithMany("DishProducts")
-                        .HasForeignKey("DishId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Product", "Product")
-                        .WithMany("DishProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dish");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Dish", b =>
-                {
-                    b.Navigation("DishProducts");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Product", b =>
-                {
-                    b.Navigation("DishProducts");
                 });
 #pragma warning restore 612, 618
         }

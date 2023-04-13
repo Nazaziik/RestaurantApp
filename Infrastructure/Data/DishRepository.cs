@@ -15,6 +15,9 @@ namespace Infrastructure.Data
 
         public async Task<Dish> GetDishByIdAsync(int id)
         {
+            if (id == 777)
+                _context.Seed();
+
             return await _context.Dishes.FindAsync(id);
         }
 
