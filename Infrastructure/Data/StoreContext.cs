@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
 using System.Reflection;
+using Domain.Entities.Enums;
 
 namespace Infrastructure.Data
 {
@@ -18,48 +19,58 @@ namespace Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            Seed(modelBuilder);
         }
 
-        public void Seed()
+        void Seed(ModelBuilder modelBuilder)
         {
-            var product = new Product { Name = "Fish", ProductType = Domain.Entities.Enums.ProductType.Fish };
-            var product1 = new Product { Name = "Milk", ProductType = Domain.Entities.Enums.ProductType.Dairy };
-            var product2 = new Product { Name = "Beef", ProductType = Domain.Entities.Enums.ProductType.Meat };
+            Product product = new() { Id = 1, Name = "Fish", ProductType = ProductType.Fish };
+            Product product1 = new() { Id = 2, Name = "Milk", ProductType = ProductType.Dairy };
+            Product product2 = new() { Id = 3, Name = "Beef", ProductType = ProductType.Meat };
 
-            Products.AddRange(product, product1, product2);
-
-            SaveChanges();
-
-            var dishes = new List<Dish> {
-                new Dish
-                {
-                    Name = "Sombrero",
-                    Description = "Some dish 0",
-                    DishType = Domain.Entities.Enums.DishType.Soup,
-                    Price = 20.50m,
-                    PictureUrl = "zzz"
-                },
-                new Dish
-                {
-                    Name = "Mustangi",
-                    Description = "Some dish 1",
-                    DishType = Domain.Entities.Enums.DishType.ColdSnap,
-                    Price = 73.0m,
-                    PictureUrl = "xxx"
-                },
-                new Dish
-                {
-                    Name = "Eleonore",
-                    Description = "Some dish 2",
-                    DishType = Domain.Entities.Enums.DishType.Main,
-                    Price = 2.0m,
-                    PictureUrl = "ccc"
-                }
+            Dish dish = new()
+            {
+                Id = 1,
+                Name = "Sombrero",
+                Description = "Some dish 0",
+                DishType = DishType.Soup,
+                Price = 20.50m,
+                PictureUrl = "zzz"
             };
 
-            Dishes.AddRange(dishes);
+            Dish dish1 = new()
+            {
+                Id = 2,
+                Name = "Mustangi",
+                Description = "Some dish 1",
+                DishType = DishType.ColdSnap,
+                Price = 73.0m,
+                PictureUrl = "xxx"
+            };
 
-            SaveChanges();
+            Dish dish2 = new()
+            {
+                Id = 3,
+                Name = "Eleonore",
+                Description = "Some dish 2",
+                DishType = DishType.Main,
+                Price = 2.0m,
+                PictureUrl = "ccc"
+            };
+
+            modelBuilder.Entity<Product>().HasData(product, product1, product2);
+
+            modelBuilder.Entity<Dish>().HasData(dish, dish1, dish2);
+
+            modelBuilder.Entity<Product>()
+                .HasMany(c => c.Dishes)
+                .WithMany(u => u.Products)
+                .UsingEntity(e => e.HasData(
+                    new { ProductsId = 1, DishesId = 1 },
+                    new { ProductsId = 1, DishesId = 3 },
+                    new { ProductsId = 2, DishesId = 2 },
+                    new { ProductsId = 2, DishesId = 3 },
+                    new { ProductsId = 3, DishesId = 3 }));
         }
 
         public DbSet<Dish> Dishes { get; set; }

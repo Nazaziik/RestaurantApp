@@ -17,9 +17,19 @@ namespace Infrastructure.Data
             return await _context.Set<T>().ToListAsync();
         }
 
+        public Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecification<T> specification)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<T> GetByIdAsync(int id)
         {
             return await _context.Set<T>().FindAsync(id);
+        }
+
+        public Task<T> GetEntityWithSpecAsync(ISpecification<T> specification)
+        {
+            throw new NotImplementedException();
         }
     }
 }
