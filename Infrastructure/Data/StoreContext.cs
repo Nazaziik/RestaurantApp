@@ -67,8 +67,8 @@ namespace Infrastructure.Data
                 .WithMany(u => u.Products)
                 .UsingEntity(e => e.HasData(
                     new { ProductsId = 1, DishesId = 1 },
-                    new { ProductsId = 1, DishesId = 3 },
                     new { ProductsId = 2, DishesId = 2 },
+                    new { ProductsId = 1, DishesId = 3 },
                     new { ProductsId = 2, DishesId = 3 },
                     new { ProductsId = 3, DishesId = 3 }));
         }

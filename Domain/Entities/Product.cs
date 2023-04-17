@@ -1,4 +1,5 @@
 ﻿using Domain.Entities.Enums;
+using System.Text.Json.Serialization;
 
 namespace Domain.Entities
 {
@@ -8,6 +9,7 @@ namespace Domain.Entities
 
         public ProductType ProductType { get; set; }
 
+        [JsonIgnore]
         public ICollection<Dish> Dishes { get; set; }
     }
 }
