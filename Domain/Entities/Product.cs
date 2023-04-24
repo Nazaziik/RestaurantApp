@@ -7,7 +7,7 @@ namespace Domain.Entities
     {
         public string Name { get; set; }
 
-        public ProductType ProductType { get; set; }
+        public ProductType Type { get; set; }
 
         [JsonIgnore]
         public ICollection<Dish> Dishes { get; set; }

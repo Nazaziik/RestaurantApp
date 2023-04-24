@@ -13,7 +13,7 @@ namespace Infrastructure.Data.Config
             builder.Property(p => p.Description).IsRequired().HasMaxLength(400);
             builder.Property(p => p.Price).HasColumnType("decimal(18,2)");
             builder.Property(p => p.PictureUrl).IsRequired();
-            builder.Property(p => p.DishType).IsRequired();
+            builder.Property(p => p.Type).IsRequired();
         }
     }
 }

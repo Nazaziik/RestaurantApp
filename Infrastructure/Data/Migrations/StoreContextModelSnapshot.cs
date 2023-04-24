@@ -38,13 +38,13 @@ namespace Infrastructure.Data.Migrations
                         },
                         new
                         {
-                            DishesId = 3,
-                            ProductsId = 1
+                            DishesId = 2,
+                            ProductsId = 2
                         },
                         new
                         {
-                            DishesId = 2,
-                            ProductsId = 2
+                            DishesId = 3,
+                            ProductsId = 1
                         },
                         new
                         {
@@ -69,9 +69,6 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("DishType")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -84,6 +81,9 @@ namespace Infrastructure.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.ToTable("Dishes");
@@ -93,28 +93,28 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             Description = "Some dish 0",
-                            DishType = 1,
                             Name = "Sombrero",
                             PictureUrl = "zzz",
-                            Price = 20.50m
+                            Price = 20.50m,
+                            Type = 1
                         },
                         new
                         {
                             Id = 2,
                             Description = "Some dish 1",
-                            DishType = 3,
                             Name = "Mustangi",
                             PictureUrl = "xxx",
-                            Price = 73.0m
+                            Price = 73.0m,
+                            Type = 3
                         },
                         new
                         {
                             Id = 3,
                             Description = "Some dish 2",
-                            DishType = 0,
                             Name = "Eleonore",
                             PictureUrl = "ccc",
-                            Price = 2.0m
+                            Price = 2.0m,
+                            Type = 0
                         });
                 });
 
@@ -129,7 +129,7 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ProductType")
+                    b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -141,19 +141,19 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             Name = "Fish",
-                            ProductType = 1
+                            Type = 1
                         },
                         new
                         {
                             Id = 2,
                             Name = "Milk",
-                            ProductType = 0
+                            Type = 0
                         },
                         new
                         {
                             Id = 3,
                             Name = "Beef",
-                            ProductType = 2
+                            Type = 2
                         });
                 });
 

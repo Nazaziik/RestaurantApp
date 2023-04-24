@@ -24,16 +24,16 @@ namespace Infrastructure.Data
 
         private static void Seed(ModelBuilder modelBuilder)
         {
-            Product product = new() { Id = 1, Name = "Fish", ProductType = ProductType.Fish };
-            Product product1 = new() { Id = 2, Name = "Milk", ProductType = ProductType.Dairy };
-            Product product2 = new() { Id = 3, Name = "Beef", ProductType = ProductType.Meat };
+            Product product = new() { Id = 1, Name = "Fish", Type = ProductType.Fish };
+            Product product1 = new() { Id = 2, Name = "Milk", Type = ProductType.Dairy };
+            Product product2 = new() { Id = 3, Name = "Beef", Type = ProductType.Meat };
 
             Dish dish = new()
             {
                 Id = 1,
                 Name = "Sombrero",
                 Description = "Some dish 0",
-                DishType = DishType.Soup,
+                Type = DishType.Soup,
                 Price = 20.50m,
                 PictureUrl = "zzz"
             };
@@ -43,7 +43,7 @@ namespace Infrastructure.Data
                 Id = 2,
                 Name = "Mustangi",
                 Description = "Some dish 1",
-                DishType = DishType.ColdSnap,
+                Type = DishType.ColdSnap,
                 Price = 73.0m,
                 PictureUrl = "xxx"
             };
@@ -53,7 +53,7 @@ namespace Infrastructure.Data
                 Id = 3,
                 Name = "Eleonore",
                 Description = "Some dish 2",
-                DishType = DishType.Main,
+                Type = DishType.Main,
                 Price = 2.0m,
                 PictureUrl = "ccc"
             };

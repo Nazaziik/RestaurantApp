@@ -1,9 +1,9 @@
-﻿using Domain.Entities.Enums;
-
-namespace Domain.Entities
+﻿namespace WebAPI.DTOs
 {
-    public class Dish : BaseEntity
+    public class DishToReturnDTO
     {
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -12,8 +12,8 @@ namespace Domain.Entities
 
         public string PictureUrl { get; set; }
 
-        public DishType Type { get; set; }
+        public string Type { get; set; }
 
-        public ICollection<Product> Products { get; set; }
+        public ICollection<string> Products { get; set; }
     }
 }

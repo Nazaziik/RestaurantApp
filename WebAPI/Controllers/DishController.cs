@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Specifications;
+using WebAPI.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -17,21 +18,41 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Dish>>> GetDishes()
+        public async Task<ActionResult<List<DishToReturnDTO>>> GetDishes()
         {
             var specification = new DishWithProductsSpec();
 
             var dishes = await _dishRepo.GetAllWithSpecAsync(specification);
 
-            return Ok(dishes);
+            return dishes.Select(dish => new DishToReturnDTO
+            {
+                Id = dish.Id,
+                Name = dish.Name,
+                Description = dish.Description,
+                PictureUrl = dish.PictureUrl,
+                Price = dish.Price,
+                Type = dish.Type.ToString(),
+                Products = dish.Products.Select(p => p.Name).ToList()
+            }).ToList();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Dish>> GetDish(int id)
+        public async Task<ActionResult<DishToReturnDTO>> GetDish(int id)
         {
             var specification = new DishWithProductsSpec(id);
 
-            return await _dishRepo.GetEntityWithSpecAsync(specification);
+            var dish = await _dishRepo.GetEntityWithSpecAsync(specification);
+
+            return new DishToReturnDTO
+            {
+                Id = dish.Id,
+                Name = dish.Name,
+                Description = dish.Description,
+                PictureUrl = dish.PictureUrl,
+                Price = dish.Price,
+                Type = dish.Type.ToString(),
+                Products = dish.Products.Select(p => p.Name).ToList()
+            };
         }
     }
 }
