@@ -2,11 +2,11 @@
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data
+namespace Infrastructure.Data.Repository
 {
     public class DishRepository : IDishRepository
     {
-        readonly StoreContext _context;
+        private readonly StoreContext _context;
 
         public DishRepository(StoreContext context)
         {

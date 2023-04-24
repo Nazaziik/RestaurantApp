@@ -1,5 +1,6 @@
 ﻿using Domain.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebAPI.Bootstrap

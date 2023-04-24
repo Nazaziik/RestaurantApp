@@ -22,7 +22,7 @@ namespace Infrastructure.Data
             Seed(modelBuilder);
         }
 
-        void Seed(ModelBuilder modelBuilder)
+        private static void Seed(ModelBuilder modelBuilder)
         {
             Product product = new() { Id = 1, Name = "Fish", ProductType = ProductType.Fish };
             Product product1 = new() { Id = 2, Name = "Milk", ProductType = ProductType.Dairy };

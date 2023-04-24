@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Domain.Entities;
 using Domain.Interfaces;
+using Domain.Specifications;
 
 namespace WebAPI.Controllers
 {
@@ -8,10 +9,9 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     public class DishController : ControllerBase
     {
-        //private readonly IGenericRepository<Dish> _dishRepo;
-        private readonly IDishRepository _dishRepo;
+        private readonly IGenericRepository<Dish> _dishRepo;
 
-        public DishController(IDishRepository dishRepo)
+        public DishController(IGenericRepository<Dish> dishRepo)
         {
             _dishRepo = dishRepo;
         }
@@ -19,8 +19,9 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Dish>>> GetDishes()
         {
-            //var dishes = await _dishRepo.GetAllAsync();
-            var dishes = await _dishRepo.GetDishesAsync();
+            var specification = new DishWithProductsSpec();
+
+            var dishes = await _dishRepo.GetAllWithSpecAsync(specification);
 
             return Ok(dishes);
         }
@@ -28,8 +29,9 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Dish>> GetDish(int id)
         {
-            //return await _dishRepo.GetByIdAsync(id);
-            return await _dishRepo.GetDishByIdAsync(id);
+            var specification = new DishWithProductsSpec(id);
+
+            return await _dishRepo.GetEntityWithSpecAsync(specification);
         }
     }
 }

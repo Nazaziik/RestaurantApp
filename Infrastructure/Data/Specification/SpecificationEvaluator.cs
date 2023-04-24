@@ -2,7 +2,7 @@
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data
+namespace Infrastructure.Data.Specification
 {
     public class SpecificationEvaluator<TEntity> where TEntity : BaseEntity
     {
