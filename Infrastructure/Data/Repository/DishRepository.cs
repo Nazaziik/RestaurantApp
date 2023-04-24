@@ -2,11 +2,11 @@
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Data
+namespace Infrastructure.Data.Repository
 {
     public class DishRepository : IDishRepository
     {
-        readonly StoreContext _context;
+        private readonly StoreContext _context;
 
         public DishRepository(StoreContext context)
         {
@@ -15,15 +15,13 @@ namespace Infrastructure.Data
 
         public async Task<Dish> GetDishByIdAsync(int id)
         {
-            if (id == 777)
-                _context.Seed();
 
-            return await _context.Dishes.FindAsync(id);
+            return await _context.Dishes.Include(c => c.Products).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<IReadOnlyList<Dish>> GetDishesAsync()
         {
-            return await _context.Dishes.ToListAsync();
+            return await _context.Dishes.Include(c => c.Products).ToListAsync();
         }
     }
 }

@@ -14,6 +14,6 @@ namespace Domain.Entities
 
         public DishType DishType { get; set; }
 
-        //public List<Product> Products { get; set; } = new List<Product>();
+        public ICollection<Product> Products { get; set; }
     }
 }
