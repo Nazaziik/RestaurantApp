@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<DishToReturnDTO>>> GetDishes()
         {
-            var specification = new DishWithProductsSpec();
+            var specification = new DishWithTypeAndProductsSpec();
 
             var dishes = await _dishRepo.GetAllWithSpecAsync(specification);
 
@@ -31,7 +31,8 @@ namespace WebAPI.Controllers
                 Description = dish.Description,
                 PictureUrl = dish.PictureUrl,
                 Price = dish.Price,
-                Type = dish.Type.ToString(),
+                TypeId = dish.TypeId,
+                Type = dish.Type.Name.ToString(),
                 Products = dish.Products.Select(p => p.Name).ToList()
             }).ToList();
         }
@@ -39,7 +40,7 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<DishToReturnDTO>> GetDish(int id)
         {
-            var specification = new DishWithProductsSpec(id);
+            var specification = new DishWithTypeAndProductsSpec(id);
 
             var dish = await _dishRepo.GetEntityWithSpecAsync(specification);
 
@@ -50,7 +51,8 @@ namespace WebAPI.Controllers
                 Description = dish.Description,
                 PictureUrl = dish.PictureUrl,
                 Price = dish.Price,
-                Type = dish.Type.ToString(),
+                TypeId = dish.TypeId,
+                Type = dish.Type.Name.ToString(),
                 Products = dish.Products.Select(p => p.Name).ToList()
             };
         }

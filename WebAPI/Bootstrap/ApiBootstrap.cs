@@ -19,5 +19,23 @@ namespace WebAPI.Bootstrap
 
             return services;
         }
+
+        public async static Task<IServiceScope> AddMigrations(this IServiceScope scope)
+        {
+            var services = scope.ServiceProvider;
+            var context = services.GetRequiredService<StoreContext>();
+            var logger = services.GetRequiredService<ILogger<Program>>();
+
+            try
+            {
+                await context.Database.MigrateAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occured during migration");
+            }
+
+            return scope;
+        }
     }
 }

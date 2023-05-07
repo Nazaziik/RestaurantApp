@@ -1,6 +1,4 @@
-﻿using Domain.Entities.Enums;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public class Dish : BaseEntity
     {
@@ -11,6 +9,8 @@ namespace Domain.Entities
         public decimal Price { get; set; }
 
         public string PictureUrl { get; set; }
+
+        public int TypeId { get; set; }
 
         public DishType Type { get; set; }
 

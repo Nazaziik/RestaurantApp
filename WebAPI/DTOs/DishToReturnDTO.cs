@@ -12,6 +12,8 @@
 
         public string PictureUrl { get; set; }
 
+        public int TypeId { get; set; }
+
         public string Type { get; set; }
 
         public ICollection<string> Products { get; set; }

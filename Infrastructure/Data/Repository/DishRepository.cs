@@ -15,7 +15,6 @@ namespace Infrastructure.Data.Repository
 
         public async Task<Dish> GetDishByIdAsync(int id)
         {
-
             return await _context.Dishes.Include(c => c.Products).FirstOrDefaultAsync(c => c.Id == id);
         }
 
