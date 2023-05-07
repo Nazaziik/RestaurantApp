@@ -21,6 +21,14 @@ namespace Infrastructure.Data
             Seed(modelBuilder);
         }
 
+        public DbSet<ProductType> ProductTypes { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<DishType> DishTypes { get; set; }
+
+        public DbSet<Dish> Dishes { get; set; }
+
         private static void Seed(ModelBuilder modelBuilder)
         {
             ProductType productType = new() { Id = 1, Name = "Dairy" };
@@ -82,17 +90,10 @@ namespace Infrastructure.Data
                 .UsingEntity(e => e.HasData(
                     new { ProductsId = 1, DishesId = 1 },
                     new { ProductsId = 2, DishesId = 2 },
+                    new { ProductsId = 1, DishesId = 2 },
                     new { ProductsId = 1, DishesId = 3 },
                     new { ProductsId = 2, DishesId = 3 },
                     new { ProductsId = 3, DishesId = 3 }));
         }
-
-        public DbSet<ProductType> ProductTypes { get; set; }
-
-        public DbSet<Product> Products { get; set; }
-
-        public DbSet<DishType> DishTypes { get; set; }
-
-        public DbSet<Dish> Dishes { get; set; }
     }
 }
