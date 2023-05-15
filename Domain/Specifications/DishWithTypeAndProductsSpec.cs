@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Specifications
 {
@@ -6,14 +7,14 @@ namespace Domain.Specifications
     {
         public DishWithTypeAndProductsSpec()
         {
-            AddInclude(d => d.Products);
-            AddInclude(d => d.Type);
+            AddMultipleIncludes(q => q.Include(d  => d.Type));
+            AddMultipleIncludes(q => q.Include(d => d.Products).ThenInclude(p => p.Type));
         }
 
         public DishWithTypeAndProductsSpec(int id): base(d => d.Id == id)
         {
-            AddInclude(d => d.Products);
             AddInclude(d => d.Type);
+            AddInclude(d => d.Products);
         }
     }
 }

@@ -11,5 +11,9 @@ namespace Domain.Interfaces
         Task<T> GetEntityWithSpecAsync(ISpecification<T> specification);
 
         Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecification<T> specification);
+
+        Task<T> GetEntityWithMultipleSpecAsync(ISpecification<T> specification);
+
+        Task<IReadOnlyList<T>> GetAllWithMultipleSpecAsync(ISpecification<T> specification);
     }
 }

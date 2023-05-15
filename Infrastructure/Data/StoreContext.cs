@@ -35,9 +35,9 @@ namespace Infrastructure.Data
             ProductType productType2 = new() { Id = 2, Name = "Fish" };
             ProductType productType3 = new() { Id = 3, Name = "Meat" };
 
-            Product product = new() { Id = 1, Name = "Fish", TypeId = 3 };
+            Product product = new() { Id = 1, Name = "Fish", TypeId = 2 };
             Product product2 = new() { Id = 2, Name = "Milk", TypeId = 1 };
-            Product product3 = new() { Id = 3, Name = "Beef", TypeId = 2 };
+            Product product3 = new() { Id = 3, Name = "Beef", TypeId = 3 };
 
             DishType dishType = new() { Id = 1, Name = "Main" };
             DishType dishType2 = new() { Id = 2, Name = "Soup" };

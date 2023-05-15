@@ -17,5 +17,7 @@
         public string Type { get; set; }
 
         public ICollection<string> Products { get; set; }
+
+        public ICollection<string> ProductTypes { get; set; }
     }
 }

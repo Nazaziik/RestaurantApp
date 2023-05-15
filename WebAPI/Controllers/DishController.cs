@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         {
             var specification = new DishWithTypeAndProductsSpec();
 
-            var dishes = await _dishRepo.GetAllWithSpecAsync(specification);
+            var dishes = await _dishRepo.GetAllWithMultipleSpecAsync(specification);
 
             return dishes.Select(dish => new DishToReturnDTO
             {
@@ -33,7 +33,8 @@ namespace WebAPI.Controllers
                 Price = dish.Price,
                 TypeId = dish.TypeId,
                 Type = dish.Type.Name.ToString(),
-                Products = dish.Products.Select(p => p.Name).ToList()
+                Products = (dish.Products.Select(p => p.Name)).ToList(),
+                ProductTypes = (dish.Products.Select(p => p.Type.Name)).ToList()
             }).ToList();
         }
 
