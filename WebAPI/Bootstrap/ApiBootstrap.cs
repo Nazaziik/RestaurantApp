@@ -14,7 +14,7 @@ namespace WebAPI.Bootstrap
 
             services.AddDbContext<StoreContext>(options =>
             {
-                options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
             return services;
@@ -26,9 +26,11 @@ namespace WebAPI.Bootstrap
             var context = services.GetRequiredService<StoreContext>();
             var logger = services.GetRequiredService<ILogger<Program>>();
 
+            await context.Database.EnsureCreatedAsync();
+
             try
             {
-                await context.Database.MigrateAsync();
+                //await context.Database.MigrateAsync();
             }
             catch (Exception ex)
             {
