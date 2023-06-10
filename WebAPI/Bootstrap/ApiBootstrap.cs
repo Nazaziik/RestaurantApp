@@ -11,6 +11,7 @@ namespace WebAPI.Bootstrap
         {
             services.AddScoped<IDishRepository, DishRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<StoreContext>(options =>
             {
@@ -36,8 +37,6 @@ namespace WebAPI.Bootstrap
             }
 
             await context.Database.EnsureCreatedAsync();
-
-            
 
             return scope;
         }
