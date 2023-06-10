@@ -7,9 +7,7 @@ using AutoMapper;
 
 namespace WebAPI.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class DishController : ControllerBase
+    public class DishController : BaseApiController
     {
         private readonly IGenericRepository<Dish> _dishRepo;
         private readonly IGenericRepository<DishType> _dishTypeRepo;
@@ -29,23 +27,13 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<DishToReturnDTO>>> GetDishes()
+        public async Task<ActionResult<IReadOnlyList<DishToReturnDTO>>> GetDishes()
         {
             var specification = new DishWithTypeAndProductsSpec();
 
             var dishes = await _dishRepo.GetAllWithMultipleSpecAsync(specification);
 
-            return dishes.Select(dish => new DishToReturnDTO
-            {
-                Id = dish.Id,
-                Name = dish.Name,
-                Description = dish.Description,
-                PictureUrl = dish.PictureUrl,
-                Price = dish.Price,
-                TypeId = dish.TypeId,
-                Type = dish.Type.Name.ToString(),
-                Products = (dish.Products.Select(p => p.Name)).ToList()
-            }).ToList();
+            return Ok(_mapper.Map<IReadOnlyList<Dish>, IReadOnlyList<DishToReturnDTO>>(dishes));
         }
 
         [HttpGet("{id}")]

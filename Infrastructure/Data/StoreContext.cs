@@ -52,7 +52,7 @@ namespace Infrastructure.Data
                 Name = "Sombrero",
                 Description = "Some dish 0",
                 Price = 20.50m,
-                PictureUrl = "zzz",
+                PictureUrl = "images/dishes/Dish1.png",
                 TypeId = 1
             };
 
@@ -62,7 +62,7 @@ namespace Infrastructure.Data
                 Name = "Mustangi",
                 Description = "Some dish 1",
                 Price = 73.0m,
-                PictureUrl = "xxx",
+                PictureUrl = "images/dishes/Dish2.jpg",
                 TypeId = 3
             };
 
@@ -72,7 +72,7 @@ namespace Infrastructure.Data
                 Name = "Eleonore",
                 Description = "Some dish 2",
                 Price = 2.0m,
-                PictureUrl = "ccc",
+                PictureUrl = "images/dishes/Dish3.jpg",
                 TypeId = 2
             };
 
