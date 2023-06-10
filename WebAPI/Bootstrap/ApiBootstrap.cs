@@ -11,13 +11,34 @@ namespace WebAPI.Bootstrap
         {
             services.AddScoped<IDishRepository, DishRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddDbContext<StoreContext>(options =>
             {
-                options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
 
             return services;
+        }
+
+        public async static Task<IServiceScope> dbConfiguration(this IServiceScope scope)
+        {
+            var services = scope.ServiceProvider;
+            var context = services.GetRequiredService<StoreContext>();
+            var logger = services.GetRequiredService<ILogger<Program>>();
+
+            try
+            {
+                await context.Database.MigrateAsync();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "An error occured during migration");
+            }
+
+            await context.Database.EnsureCreatedAsync();
+
+            return scope;
         }
     }
 }

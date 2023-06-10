@@ -1,4 +1,5 @@
 ﻿using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace Domain.Specifications
@@ -8,6 +9,8 @@ namespace Domain.Specifications
         public Expression<Func<T, bool>> Criteria { get; }
 
         public List<Expression<Func<T, object>>> Includes { get; } = new List<Expression<Func<T, object>>>();
+
+        public List<Func<IQueryable<T>, IIncludableQueryable<T, object>>> ContinuousIncludes { get; } = new List<Func<IQueryable<T>, IIncludableQueryable<T, object>>>();
 
         public BaseSpecification()
         {
@@ -22,6 +25,11 @@ namespace Domain.Specifications
         protected void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             Includes.Add(includeExpression);
+        }
+
+        protected void AddMultipleIncludes(Func<IQueryable<T>, IIncludableQueryable<T, object>> includeExpression)
+        {
+            ContinuousIncludes.Add(includeExpression);
         }
     }
 }

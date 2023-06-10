@@ -38,13 +38,13 @@ namespace Infrastructure.Data.Migrations
                         },
                         new
                         {
-                            DishesId = 3,
-                            ProductsId = 1
+                            DishesId = 2,
+                            ProductsId = 2
                         },
                         new
                         {
-                            DishesId = 2,
-                            ProductsId = 2
+                            DishesId = 3,
+                            ProductsId = 1
                         },
                         new
                         {
@@ -69,9 +69,6 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(400)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("DishType")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -84,7 +81,12 @@ namespace Infrastructure.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("TypeId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Dishes");
 
@@ -93,28 +95,75 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             Description = "Some dish 0",
-                            DishType = 1,
                             Name = "Sombrero",
                             PictureUrl = "zzz",
-                            Price = 20.50m
+                            Price = 20.50m,
+                            TypeId = 1
                         },
                         new
                         {
                             Id = 2,
                             Description = "Some dish 1",
-                            DishType = 3,
                             Name = "Mustangi",
                             PictureUrl = "xxx",
-                            Price = 73.0m
+                            Price = 73.0m,
+                            TypeId = 3
                         },
                         new
                         {
                             Id = 3,
                             Description = "Some dish 2",
-                            DishType = 0,
                             Name = "Eleonore",
                             PictureUrl = "ccc",
-                            Price = 2.0m
+                            Price = 2.0m,
+                            TypeId = 2
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.DishType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DishTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Main"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Soup"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Desert"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Cold Snap"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Hot Snap"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Special"
                         });
                 });
 
@@ -129,10 +178,12 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ProductType")
+                    b.Property<int>("TypeId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Products");
 
@@ -141,19 +192,51 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             Name = "Fish",
-                            ProductType = 1
+                            TypeId = 3
                         },
                         new
                         {
                             Id = 2,
                             Name = "Milk",
-                            ProductType = 0
+                            TypeId = 1
                         },
                         new
                         {
                             Id = 3,
                             Name = "Beef",
-                            ProductType = 2
+                            TypeId = 2
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.ProductType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Dairy"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Fish"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Meat"
                         });
                 });
 
@@ -170,6 +253,28 @@ namespace Infrastructure.Data.Migrations
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Dish", b =>
+                {
+                    b.HasOne("Domain.Entities.DishType", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Product", b =>
+                {
+                    b.HasOne("Domain.Entities.ProductType", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Type");
                 });
 #pragma warning restore 612, 618
         }

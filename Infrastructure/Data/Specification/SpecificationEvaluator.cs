@@ -19,5 +19,19 @@ namespace Infrastructure.Data.Specification
 
             return query;
         }
+
+        public static IQueryable<TEntity> GetMultipleQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> specification)
+        {
+            var query = inputQuery;
+
+            if (specification.Criteria != null)
+            {
+                query = query.Where(specification.Criteria);
+            }
+
+            query = specification.ContinuousIncludes.Aggregate(query, (current, include) => include(current));
+
+            return query;
+        }
     }
 }

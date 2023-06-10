@@ -10,7 +10,16 @@ namespace Infrastructure.Data.Config
         {
             builder.Property(p => p.Id).IsRequired();
             builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
-            builder.Property(p => p.ProductType).IsRequired();
+            builder.HasOne(p => p.Type).WithMany().HasForeignKey(p => p.TypeId);
+        }
+    }
+
+    public class ProductTypeConfiguration : IEntityTypeConfiguration<ProductType>
+    {
+        public void Configure(EntityTypeBuilder<ProductType> builder)
+        {
+            builder.Property(t => t.Id).IsRequired().ValueGeneratedNever();
+            builder.Property(t => t.Name).IsRequired().HasMaxLength(25);
         }
     }
 }
