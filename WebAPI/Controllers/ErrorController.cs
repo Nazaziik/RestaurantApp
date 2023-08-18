@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Errors;
 
 namespace WebAPI.Controllers
 {
@@ -18,7 +19,7 @@ namespace WebAPI.Controllers
             var response = _context.Dishes.Find(77);
 
             if (response == null)
-                return NotFound();
+                return NotFound(new ApiResponse(404));
 
             return Ok();
         }
@@ -36,7 +37,7 @@ namespace WebAPI.Controllers
         [HttpGet("badrequest")]
         public ActionResult GetBadRequestError()
         {
-            return BadRequest();
+            return BadRequest(new ApiResponse(400));
         }
 
         [HttpGet("validationerror/{id}")]
