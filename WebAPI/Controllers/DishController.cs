@@ -4,6 +4,7 @@ using Domain.Interfaces;
 using Domain.Specifications;
 using WebAPI.DTOs;
 using AutoMapper;
+using WebAPI.Errors;
 
 namespace WebAPI.Controllers
 {
@@ -37,11 +38,15 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<DishToReturnDTO>> GetDish(int id)
         {
             var specification = new DishWithTypeAndProductsSpec(id);
 
             var dish = await _dishRepo.GetEntityWithSpecAsync(specification);
+
+            if (dish == null) return NotFound(new ApiResponse(404));
 
             return _mapper.Map<Dish, DishToReturnDTO>(dish);
         }
