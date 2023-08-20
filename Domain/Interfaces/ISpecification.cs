@@ -10,5 +10,9 @@ namespace Domain.Interfaces
         List<Expression<Func<T, object>>> Includes { get; }
 
         List<Func<IQueryable<T>, IIncludableQueryable<T, object>>> ContinuousIncludes { get; }
+
+        Expression<Func<T, object>> OrderBy { get; }
+
+        Expression<Func<T, object>> OrderByDescending { get; }
     }
 }
