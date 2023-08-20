@@ -28,9 +28,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<DishToReturnDTO>>> GetDishes()
+        public async Task<ActionResult<IReadOnlyList<DishToReturnDTO>>> GetDishes(string sort)
         {
-            var specification = new DishWithTypeAndProductsSpec();
+            var specification = new DishWithTypeAndProductsSpec(sort);
 
             var dishes = await _dishRepo.GetAllWithMultipleSpecAsync(specification);
 
