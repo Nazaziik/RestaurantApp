@@ -5,11 +5,12 @@ namespace Domain.Specifications
 {
     public class DishWithTypeAndProductsSpec : BaseSpecification<Dish>
     {
-        public DishWithTypeAndProductsSpec(string sort)
+        public DishWithTypeAndProductsSpec(string sort, int? typeId)
+            : base(x => !typeId.HasValue || x.TypeId == typeId)
         {
             AddMultipleIncludes(q => q.Include(d => d.Type));
             AddMultipleIncludes(q => q.Include(d => d.Products).ThenInclude(p => p.Type));
-            AddOrderBy(d => d.Name);
+            AddOrderBy(d => d.Price);
 
             if (!string.IsNullOrEmpty(sort))
             {

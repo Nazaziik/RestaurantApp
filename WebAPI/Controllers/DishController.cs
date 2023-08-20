@@ -28,9 +28,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<DishToReturnDTO>>> GetDishes(string sort)
+        public async Task<ActionResult<IReadOnlyList<DishToReturnDTO>>> GetDishes(
+            string sort, int? typeId)
         {
-            var specification = new DishWithTypeAndProductsSpec(sort);
+            var specification = new DishWithTypeAndProductsSpec(sort, typeId);
 
             var dishes = await _dishRepo.GetAllWithMultipleSpecAsync(specification);
 
@@ -38,7 +39,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status200OK)] //Swagger improved look
         //[ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<DishToReturnDTO>> GetDish(int id)
         {
