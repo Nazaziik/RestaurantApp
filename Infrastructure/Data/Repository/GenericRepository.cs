@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Entities.Base;
 using Domain.Interfaces;
 using Infrastructure.Data.Specification;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +41,11 @@ namespace Infrastructure.Data.Repository
         public async Task<IReadOnlyList<T>> GetAllWithMultipleSpecAsync(ISpecification<T> specification)
         {
             return await ApplyMultipleSpecification(specification).ToListAsync();
+        }
+
+        public async Task<int> CountAsync(ISpecification<T> specification)
+        {
+            return await ApplySpecification(specification).CountAsync();
         }
 
         IQueryable<T> ApplySpecification(ISpecification<T> specification)

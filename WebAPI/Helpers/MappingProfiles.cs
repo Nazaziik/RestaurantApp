@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Domain.Entities;
+using Domain.Entities.Base;
 using WebAPI.DTOs;
 
 namespace WebAPI.Helpers

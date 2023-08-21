@@ -1,4 +1,4 @@
-﻿namespace Domain.Entities
+﻿namespace Domain.Entities.Base
 {
     /// <summary>
     /// Base entity for all dishes
