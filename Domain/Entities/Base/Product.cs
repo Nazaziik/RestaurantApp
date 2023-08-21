@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Domain.Entities
+namespace Domain.Entities.Base
 {
     public class Product : BaseEntity
     {

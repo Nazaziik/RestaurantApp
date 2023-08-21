@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Specifications;
 using WebAPI.DTOs;
 using AutoMapper;
 using WebAPI.Errors;
+using Domain.Entities.Base;
+using Domain.Entities.Additional;
 
 namespace WebAPI.Controllers
 {
@@ -29,9 +30,9 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<DishToReturnDTO>>> GetDishes(
-            string sort, int? typeId)
+            [FromQuery] EntitySpecParams dishParams)
         {
-            var specification = new DishWithTypeAndProductsSpec(sort, typeId);
+            var specification = new DishWithTypeAndProductsSpec(dishParams);
 
             var dishes = await _dishRepo.GetAllWithMultipleSpecAsync(specification);
 
