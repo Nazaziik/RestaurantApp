@@ -45,7 +45,7 @@ namespace Infrastructure.Data.Repository
 
         public async Task<int> CountAsync(ISpecification<T> specification)
         {
-            return await ApplySpecification(specification).CountAsync();
+            return await ApplyMultipleSpecification(specification).CountAsync();
         }
 
         IQueryable<T> ApplySpecification(ISpecification<T> specification)

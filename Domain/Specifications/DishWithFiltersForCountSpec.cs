@@ -6,9 +6,11 @@ namespace Domain.Specifications
     public class DishWithFiltersForCountSpec : BaseSpecification<Dish>
     {
         public DishWithFiltersForCountSpec(EntitySpecParams dishParams)
-             : base(x => !dishParams.TypeId.HasValue || x.TypeId == dishParams.TypeId)
+            : base(x =>
+                (string.IsNullOrEmpty(dishParams.Search) || x.Name.ToLower().Contains(dishParams.Search)) &&
+                (!dishParams.TypeId.HasValue || x.TypeId == dishParams.TypeId))
         {
-            
+
         }
     }
 }

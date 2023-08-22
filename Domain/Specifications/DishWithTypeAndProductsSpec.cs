@@ -7,7 +7,9 @@ namespace Domain.Specifications
     public class DishWithTypeAndProductsSpec : BaseSpecification<Dish>
     {
         public DishWithTypeAndProductsSpec(EntitySpecParams dishParams)
-            : base(x => !dishParams.TypeId.HasValue || x.TypeId == dishParams.TypeId)
+            : base(d =>
+                (string.IsNullOrEmpty(dishParams.Search) || d.Name.ToLower().Contains(dishParams.Search)) &&
+                (!dishParams.TypeId.HasValue || d.TypeId == dishParams.TypeId))
         {
             AddMultipleIncludes(q => q.Include(d => d.Type));
             AddMultipleIncludes(q => q.Include(d => d.Products).ThenInclude(p => p.Type));
