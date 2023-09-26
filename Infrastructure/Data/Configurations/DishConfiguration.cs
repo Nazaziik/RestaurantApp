@@ -9,10 +9,10 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<Dish> builder)
         {
             builder.Property(d => d.Id).IsRequired();
-            builder.Property(d => d.Name).HasColumnType("NVARCHAR(MAX)").IsRequired().HasMaxLength(100);
-            builder.Property(d => d.Description).HasColumnType("NVARCHAR(MAX)").IsRequired().HasMaxLength(400);
+            builder.Property(d => d.Name).IsRequired().HasMaxLength(100);
+            builder.Property(d => d.Description).IsRequired().HasMaxLength(400);
             builder.Property(d => d.Price).HasColumnType("decimal(18,2)");
-            builder.Property(d => d.PictureUrl).HasColumnType("NVARCHAR(MAX)").IsRequired();
+            builder.Property(d => d.PictureUrl).IsRequired();
             builder.HasOne(d => d.Type).WithMany().HasForeignKey(d => d.TypeId);
         }
     }
@@ -22,7 +22,7 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<DishType> builder)
         {
             builder.Property(p => p.Id).IsRequired().ValueGeneratedNever();
-            builder.Property(p => p.Name).HasColumnType("NVARCHAR(MAX)").IsRequired().HasMaxLength(20);
+            builder.Property(p => p.Name).IsRequired().HasMaxLength(20);
         }
     }
 }
