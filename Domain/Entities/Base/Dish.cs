@@ -2,7 +2,7 @@
 {
     public class Dish : BaseEntity
     {
-        //[Column(TypeName = "nvarchar(MAX)")]  // This should fix ordering problem
+        //[Column(TypeName = "varchar(MAX)")]  // This should fix ordering problem
         public string Name { get; set; }
 
         public string Description { get; set; }
