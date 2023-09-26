@@ -9,7 +9,7 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.Property(p => p.Id).IsRequired();
-            builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
+            builder.Property(p => p.Name).HasColumnType("NVARCHAR(MAX)").IsRequired().HasMaxLength(100);
             builder.HasOne(p => p.Type).WithMany().HasForeignKey(p => p.TypeId);
         }
     }
@@ -19,7 +19,7 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<ProductType> builder)
         {
             builder.Property(t => t.Id).IsRequired().ValueGeneratedNever();
-            builder.Property(t => t.Name).IsRequired().HasMaxLength(25);
+            builder.Property(t => t.Name).HasColumnType("NVARCHAR(MAX)").IsRequired().HasMaxLength(25);
         }
     }
 }
