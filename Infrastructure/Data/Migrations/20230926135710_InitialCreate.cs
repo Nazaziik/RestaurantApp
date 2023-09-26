@@ -12,8 +12,8 @@ namespace Infrastructure.Data.Migrations
                 name: "DishTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -24,8 +24,8 @@ namespace Infrastructure.Data.Migrations
                 name: "ProductTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 25, nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -36,13 +36,13 @@ namespace Infrastructure.Data.Migrations
                 name: "Dishes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 400, nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PictureUrl = table.Column<string>(type: "TEXT", nullable: false),
-                    TypeId = table.Column<int>(type: "INTEGER", nullable: false)
+                    PictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,10 +59,10 @@ namespace Infrastructure.Data.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    TypeId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,8 +79,8 @@ namespace Infrastructure.Data.Migrations
                 name: "DishProduct",
                 columns: table => new
                 {
-                    DishesId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ProductsId = table.Column<int>(type: "INTEGER", nullable: false)
+                    DishesId = table.Column<int>(type: "int", nullable: false),
+                    ProductsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,102 +102,58 @@ namespace Infrastructure.Data.Migrations
             migrationBuilder.InsertData(
                 table: "DishTypes",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Main" });
-
-            migrationBuilder.InsertData(
-                table: "DishTypes",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "Soup" });
-
-            migrationBuilder.InsertData(
-                table: "DishTypes",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 3, "Desert" });
-
-            migrationBuilder.InsertData(
-                table: "DishTypes",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 4, "Cold Snap" });
-
-            migrationBuilder.InsertData(
-                table: "DishTypes",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 5, "Hot Snap" });
-
-            migrationBuilder.InsertData(
-                table: "DishTypes",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 6, "Special" });
+                values: new object[,]
+                {
+                    { 1, "Main" },
+                    { 2, "Soup" },
+                    { 3, "Desert" },
+                    { 4, "Cold Snap" },
+                    { 5, "Hot Snap" },
+                    { 6, "Special" }
+                });
 
             migrationBuilder.InsertData(
                 table: "ProductTypes",
                 columns: new[] { "Id", "Name" },
-                values: new object[] { 1, "Dairy" });
-
-            migrationBuilder.InsertData(
-                table: "ProductTypes",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 2, "Fish" });
-
-            migrationBuilder.InsertData(
-                table: "ProductTypes",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { 3, "Meat" });
+                values: new object[,]
+                {
+                    { 1, "Dairy" },
+                    { 2, "Fish" },
+                    { 3, "Meat" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Dishes",
                 columns: new[] { "Id", "Description", "Name", "PictureUrl", "Price", "TypeId" },
-                values: new object[] { 1, "Some dish 0", "Sombrero", "zzz", 20.50m, 1 });
-
-            migrationBuilder.InsertData(
-                table: "Dishes",
-                columns: new[] { "Id", "Description", "Name", "PictureUrl", "Price", "TypeId" },
-                values: new object[] { 2, "Some dish 1", "Mustangi", "xxx", 73.0m, 3 });
-
-            migrationBuilder.InsertData(
-                table: "Dishes",
-                columns: new[] { "Id", "Description", "Name", "PictureUrl", "Price", "TypeId" },
-                values: new object[] { 3, "Some dish 2", "Eleonore", "ccc", 2.0m, 2 });
+                values: new object[,]
+                {
+                    { 1, "Some dish 0", "Sombrero", "images/dishes/Dish1.png", 20.50m, 1 },
+                    { 2, "Some dish 1", "Mustangi", "images/dishes/Dish2.jpg", 73.0m, 3 },
+                    { 3, "Some dish 2", "Eleonore", "images/dishes/Dish3.jpg", 2.0m, 2 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "Name", "TypeId" },
-                values: new object[] { 1, "Fish", 3 });
-
-            migrationBuilder.InsertData(
-                table: "Products",
-                columns: new[] { "Id", "Name", "TypeId" },
-                values: new object[] { 2, "Milk", 1 });
-
-            migrationBuilder.InsertData(
-                table: "Products",
-                columns: new[] { "Id", "Name", "TypeId" },
-                values: new object[] { 3, "Beef", 2 });
+                values: new object[,]
+                {
+                    { 1, "Fish", 2 },
+                    { 2, "Milk", 1 },
+                    { 3, "Beef", 3 }
+                });
 
             migrationBuilder.InsertData(
                 table: "DishProduct",
                 columns: new[] { "DishesId", "ProductsId" },
-                values: new object[] { 1, 1 });
-
-            migrationBuilder.InsertData(
-                table: "DishProduct",
-                columns: new[] { "DishesId", "ProductsId" },
-                values: new object[] { 2, 2 });
-
-            migrationBuilder.InsertData(
-                table: "DishProduct",
-                columns: new[] { "DishesId", "ProductsId" },
-                values: new object[] { 3, 1 });
-
-            migrationBuilder.InsertData(
-                table: "DishProduct",
-                columns: new[] { "DishesId", "ProductsId" },
-                values: new object[] { 3, 2 });
-
-            migrationBuilder.InsertData(
-                table: "DishProduct",
-                columns: new[] { "DishesId", "ProductsId" },
-                values: new object[] { 3, 3 });
+                values: new object[,]
+                {
+                    { 1, 1 },
+                    { 2, 1 },
+                    { 2, 2 },
+                    { 3, 1 },
+                    { 3, 2 },
+                    { 3, 3 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Dishes_TypeId",

@@ -2,6 +2,7 @@
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -14,15 +15,19 @@ namespace Infrastructure.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.15");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("DishProduct", b =>
                 {
                     b.Property<int>("DishesId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductsId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("DishesId", "ProductsId");
 
@@ -43,6 +48,11 @@ namespace Infrastructure.Data.Migrations
                         },
                         new
                         {
+                            DishesId = 2,
+                            ProductsId = 1
+                        },
+                        new
+                        {
                             DishesId = 3,
                             ProductsId = 1
                         },
@@ -58,31 +68,33 @@ namespace Infrastructure.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.Dish", b =>
+            modelBuilder.Entity("Domain.Entities.Base.Dish", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(400)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(400)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PictureUrl")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("TypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -96,7 +108,7 @@ namespace Infrastructure.Data.Migrations
                             Id = 1,
                             Description = "Some dish 0",
                             Name = "Sombrero",
-                            PictureUrl = "zzz",
+                            PictureUrl = "images/dishes/Dish1.png",
                             Price = 20.50m,
                             TypeId = 1
                         },
@@ -105,7 +117,7 @@ namespace Infrastructure.Data.Migrations
                             Id = 2,
                             Description = "Some dish 1",
                             Name = "Mustangi",
-                            PictureUrl = "xxx",
+                            PictureUrl = "images/dishes/Dish2.jpg",
                             Price = 73.0m,
                             TypeId = 3
                         },
@@ -114,21 +126,21 @@ namespace Infrastructure.Data.Migrations
                             Id = 3,
                             Description = "Some dish 2",
                             Name = "Eleonore",
-                            PictureUrl = "ccc",
+                            PictureUrl = "images/dishes/Dish3.jpg",
                             Price = 2.0m,
                             TypeId = 2
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.DishType", b =>
+            modelBuilder.Entity("Domain.Entities.Base.DishType", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -167,19 +179,21 @@ namespace Infrastructure.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.Product", b =>
+            modelBuilder.Entity("Domain.Entities.Base.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("TypeId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -192,7 +206,7 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             Name = "Fish",
-                            TypeId = 3
+                            TypeId = 2
                         },
                         new
                         {
@@ -204,19 +218,19 @@ namespace Infrastructure.Data.Migrations
                         {
                             Id = 3,
                             Name = "Beef",
-                            TypeId = 2
+                            TypeId = 3
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProductType", b =>
+            modelBuilder.Entity("Domain.Entities.Base.ProductType", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(25)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(25)");
 
                     b.HasKey("Id");
 
@@ -242,22 +256,22 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("DishProduct", b =>
                 {
-                    b.HasOne("Domain.Entities.Dish", null)
+                    b.HasOne("Domain.Entities.Base.Dish", null)
                         .WithMany()
                         .HasForeignKey("DishesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Product", null)
+                    b.HasOne("Domain.Entities.Base.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entities.Dish", b =>
+            modelBuilder.Entity("Domain.Entities.Base.Dish", b =>
                 {
-                    b.HasOne("Domain.Entities.DishType", "Type")
+                    b.HasOne("Domain.Entities.Base.DishType", "Type")
                         .WithMany()
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -266,9 +280,9 @@ namespace Infrastructure.Data.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Product", b =>
+            modelBuilder.Entity("Domain.Entities.Base.Product", b =>
                 {
-                    b.HasOne("Domain.Entities.ProductType", "Type")
+                    b.HasOne("Domain.Entities.Base.ProductType", "Type")
                         .WithMany()
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)

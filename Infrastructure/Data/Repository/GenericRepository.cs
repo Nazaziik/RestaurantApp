@@ -33,29 +33,21 @@ namespace Infrastructure.Data.Repository
             return await ApplySpecification(specification).ToListAsync();
         }
 
-        public async Task<T> GetEntityWithMultipleSpecAsync(ISpecification<T> specification)
-        {
-            return await ApplyMultipleSpecification(specification).FirstOrDefaultAsync();
-        }
-
-        public async Task<IReadOnlyList<T>> GetAllWithMultipleSpecAsync(ISpecification<T> specification)
-        {
-            return await ApplyMultipleSpecification(specification).ToListAsync();
-        }
-
         public async Task<int> CountAsync(ISpecification<T> specification)
         {
             return await ApplySpecification(specification).CountAsync();
         }
 
+        //Include && ThenInclude V.02
         IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), specification);
         }
 
-        IQueryable<T> ApplyMultipleSpecification(ISpecification<T> specification)
-        {
-            return SpecificationEvaluator<T>.GetMultipleQuery(_context.Set<T>().AsQueryable(), specification);
-        }
+        //ThenInclude V.01
+        //IQueryable<T> ApplyMultipleSpecification(ISpecification<T> specification)
+        //{
+        //    return SpecificationEvaluator<T>.GetMultipleQuery(_context.Set<T>().AsQueryable(), specification);
+        //}
     }
 }

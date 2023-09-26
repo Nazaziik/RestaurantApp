@@ -30,31 +30,14 @@ namespace Infrastructure.Data.Specification
                 query = query.Skip(specification.Skip).Take(specification.Take);
             }
 
-            query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
+            //Include
+            //query = specification.Includes.Aggregate(query, (current, include) => current.Include(include));
 
-            return query;
-        }
+            //ThenInclude V.01
+            //query = specification.ContinuousIncludes.Aggregate(query, (current, include) => include(current));
 
-        public static IQueryable<TEntity> GetMultipleQuery(IQueryable<TEntity> inputQuery, ISpecification<TEntity> specification)
-        {
-            var query = inputQuery;
-
-            if (specification.Criteria != null)
-            {
-                query = query.Where(specification.Criteria);
-            }
-
-            if (specification.OrderBy != null)
-            {
-                query = query.OrderBy(specification.OrderBy);
-            }
-
-            if (specification.OrderByDescending != null)
-            {
-                query = query.OrderByDescending(specification.OrderByDescending);
-            }
-
-            query = specification.ContinuousIncludes.Aggregate(query, (current, include) => include(current));
+            //ThenInclude V.02
+            query = specification.ContinuousIncludes.Aggregate(query, (current, include) => current.Include(include));
 
             return query;
         }

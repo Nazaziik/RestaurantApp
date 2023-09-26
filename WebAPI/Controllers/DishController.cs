@@ -13,9 +13,6 @@ namespace WebAPI.Controllers
     public class DishController : BaseApiController
     {
         private readonly IGenericRepository<Dish> _dishRepo;
-        private readonly IGenericRepository<DishType> _dishTypeRepo;
-        private readonly IGenericRepository<Product> _productRepo;
-        private readonly IGenericRepository<ProductType> _productTypeRepo;
         private readonly IMapper _mapper;
 
         public DishController(IGenericRepository<Dish> dishRepo, IGenericRepository<DishType> dishTypeRepo,
@@ -23,9 +20,6 @@ namespace WebAPI.Controllers
                               IMapper mapper)
         {
             _dishRepo = dishRepo;
-            _dishTypeRepo = dishTypeRepo;
-            _productRepo = productRepo;
-            _productTypeRepo = productTypeRepo;
             _mapper = mapper;
         }
 
@@ -39,7 +33,7 @@ namespace WebAPI.Controllers
 
             var totalItems = await _dishRepo.CountAsync(countSpecification);
 
-            var dishes = await _dishRepo.GetAllWithMultipleSpecAsync(specification);
+            var dishes = await _dishRepo.GetAllWithSpecAsync(specification);
 
             var data = _mapper.Map<IReadOnlyList<Dish>, IReadOnlyList<DishToReturnDTO>>(dishes);
 
