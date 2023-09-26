@@ -22,7 +22,7 @@ namespace Domain.Specifications
             AddInclude("Type");
             AddInclude("Products.Type");
 
-            AddOrderBy(d => d.Price);
+            AddOrderBy(d => d.Name);
             ApplyPaging(dishParams.PageSize * (dishParams.PageIndex - 1), dishParams.PageSize);
 
             if (!string.IsNullOrEmpty(dishParams.Sort))
