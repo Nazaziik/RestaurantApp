@@ -35,24 +35,44 @@ namespace Infrastructure.Data.Repository
 
         public async Task<T> GetEntityWithMultipleSpecAsync(ISpecification<T> specification)
         {
+            //ThenInclude V.01
+            //return await ApplyMultipleSpecification(specification).FirstOrDefaultAsync();
+
+            //ThenInclude V.02
             return await ApplyMultipleSpecification(specification).FirstOrDefaultAsync();
         }
 
         public async Task<IReadOnlyList<T>> GetAllWithMultipleSpecAsync(ISpecification<T> specification)
         {
+            //ThenInclude V.01
+            //return await ApplyMultipleSpecification(specification).ToListAsync();
+
+            //ThenInclude V.02
             return await ApplyMultipleSpecification(specification).ToListAsync();
         }
 
         public async Task<int> CountAsync(ISpecification<T> specification)
         {
+            //ThenInclude V.01
+            //return await ApplyMultipleSpecification(specification).CountAsync();
+
+            //ThenInclude V.02
             return await ApplyMultipleSpecification(specification).CountAsync();
         }
 
+        //Include
         IQueryable<T> ApplySpecification(ISpecification<T> specification)
         {
             return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), specification);
         }
 
+        //ThenInclude V.01
+        //IQueryable<T> ApplyMultipleSpecification(ISpecification<T> specification)
+        //{
+        //    return SpecificationEvaluator<T>.GetMultipleQuery(_context.Set<T>().AsQueryable(), specification);
+        //}
+
+        //ThenInclude V.02
         IQueryable<T> ApplyMultipleSpecification(ISpecification<T> specification)
         {
             return SpecificationEvaluator<T>.GetMultipleQuery(_context.Set<T>().AsQueryable(), specification);

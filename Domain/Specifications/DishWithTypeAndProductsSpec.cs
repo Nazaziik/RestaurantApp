@@ -1,6 +1,5 @@
 ﻿using Domain.Entities.Additional;
 using Domain.Entities.Base;
-using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Specifications
 {
@@ -11,8 +10,18 @@ namespace Domain.Specifications
                 (string.IsNullOrEmpty(dishParams.Search) || d.Name.ToLower().Contains(dishParams.Search)) &&
                 (!dishParams.TypeId.HasValue || d.TypeId == dishParams.TypeId))
         {
-            AddMultipleIncludes(q => q.Include(d => d.Type));
-            AddMultipleIncludes(q => q.Include(d => d.Products).ThenInclude(p => p.Type));
+            //Include
+            //AddInclude(d => d.Type);
+            //AddInclude(d => d.Products);
+
+            //ThenInclude V.01
+            //AddMultipleIncludes(q => q.Include(d => d.Type));
+            //AddMultipleIncludes(q => q.Include(d => d.Products).ThenInclude(p => p.Type));
+
+            //ThenInclude V.02
+            AddInclude("Type");
+            AddInclude("Products.Type");
+
             AddOrderBy(d => d.Price);
             ApplyPaging(dishParams.PageSize * (dishParams.PageIndex - 1), dishParams.PageSize);
 
